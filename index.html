@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="日々のちょっとした確認や作業に使える、シンプルなWebツール集です。">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>Web Tools | シンプルなWebツール集</title>
+  <style>
+    :root { color-scheme: light; --bg:#f6f7fb; --surface:#fff; --text:#202532; --muted:#687083; --line:#e5e8f0; --accent:#4058c8; --accent-hover:#3046ae; --accent-soft:#eef0ff; --shadow:0 12px 32px rgba(25,35,70,.06); }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Yu Gothic UI","Yu Gothic",Meiryo,sans-serif; line-height:1.7; }
+    a { color:inherit; }
+    .site-header { border-bottom:1px solid var(--line); background:rgba(255,255,255,.88); }
+    .header-inner, main, .footer-inner { width:min(1080px,calc(100% - 40px)); margin-inline:auto; }
+    .header-inner { min-height:76px; display:flex; align-items:center; justify-content:space-between; gap:20px; }
+    .brand { display:inline-flex; align-items:center; gap:11px; text-decoration:none; font-weight:750; letter-spacing:.02em; }
+    .brand-mark { display:grid; place-items:center; width:38px; height:38px; border-radius:12px; color:white; background:var(--accent); font-size:17px; font-weight:800; }
+    .header-note { color:var(--muted); font-size:.88rem; }
+    .hero { padding:76px 0 48px; }
+    .eyebrow { display:inline-block; margin:0 0 14px; padding:5px 11px; border-radius:999px; background:var(--accent-soft); color:var(--accent); font-size:.78rem; font-weight:750; letter-spacing:.08em; }
+    h1 { max-width:720px; margin:0; font-size:clamp(2rem,5vw,3.35rem); line-height:1.25; letter-spacing:-.045em; }
+    .hero-description { max-width:610px; margin:20px 0 0; color:var(--muted); font-size:1.05rem; }
+    .section-heading { display:flex; align-items:end; justify-content:space-between; gap:16px; margin:10px 0 20px; }
+    h2 { margin:0; font-size:1.45rem; letter-spacing:-.02em; }
+    .section-caption { margin:4px 0 0; color:var(--muted); font-size:.9rem; }
+    .tool-count { color:var(--muted); font-size:.88rem; white-space:nowrap; }
+    .tool-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; padding-bottom:76px; }
+    .tool-card { display:flex; flex-direction:column; min-height:245px; padding:24px; border:1px solid var(--line); border-radius:18px; background:var(--surface); box-shadow:var(--shadow); transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease; }
+    .tool-card:hover { transform:translateY(-3px); border-color:#cbd1f7; box-shadow:0 16px 38px rgba(25,35,70,.09); }
+    .tool-icon { display:grid; place-items:center; width:48px; height:48px; margin-bottom:20px; border-radius:14px; background:var(--accent-soft); color:var(--accent); font-size:1.35rem; font-weight:800; }
+    .tool-card h3 { margin:0; font-size:1.13rem; }
+    .tool-card p { margin:9px 0 24px; color:var(--muted); font-size:.92rem; }
+    .tool-link { display:inline-flex; align-items:center; justify-content:space-between; gap:12px; width:100%; margin-top:auto; padding:11px 14px; border-radius:10px; background:var(--accent); color:#fff; font-size:.92rem; font-weight:700; text-decoration:none; transition:background .18s ease; }
+    .tool-link:hover { background:var(--accent-hover); }
+    .tool-link:focus-visible, .brand:focus-visible { outline:3px solid #9da8ff; outline-offset:3px; }
+    .site-footer { border-top:1px solid var(--line); background:#fff; }
+    .footer-inner { display:flex; justify-content:space-between; gap:18px; padding-block:24px; color:var(--muted); font-size:.85rem; }
+    .footer-inner p { margin:0; }
+    @media (max-width:800px) { .tool-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .hero { padding-top:58px; } }
+    @media (max-width:560px) { .header-inner,main,.footer-inner { width:min(100% - 32px,1080px); } .header-inner { min-height:66px; } .header-note { display:none; } .hero { padding:48px 0 36px; } .hero-description { font-size:.98rem; } .tool-grid { grid-template-columns:1fr; gap:14px; padding-bottom:52px; } .tool-card { min-height:0; padding:21px; } .section-heading { align-items:start; } .footer-inner { flex-direction:column; gap:5px; } }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { transition-duration:.01ms!important; animation-duration:.01ms!important; animation-iteration-count:1!important; } }
+  </style>
+<script type="text/javascript" nonce="abf2ba2c7538411982a405fe4b3" src="//local.adguard.org?ts=1792559369375&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000addc820b970d5db497b9c5cc%26fn%3Dindex.html%26cd%3Dattachment%26ts%3D497934%26p%3Dfs%26cid%3D1%26sig%3D1a3707402338d41051733a9e31eb96ac371889d14c2e0fd39baceea9aac757d7%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=0"></script><script type="text/javascript" nonce="abf2ba2c7538411982a405fe4b3" src="//local.adguard.org?ts=1792559369375&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./" aria-label="Web Tools トップページ"><span class="brand-mark" aria-hidden="true">T</span><span>Web Tools</span></a>
+      <span class="header-note">シンプルで使いやすい、小さなツール集</span>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">TOOLS FOR EVERYDAY</p>
+      <h1 id="page-title">お気に入りツール</h1>
+      <p class="hero-description">事務作業に使うWebツールのリンク。</p>
+    </section>
+    <section aria-labelledby="tools-title">
+      <div class="section-heading">
+        <div><h2 id="tools-title">ツール一覧</h2><p class="section-caption">使いたいツールを選択してください。</p></div>
+        <span class="tool-count">公開中：1ツール</span>
+      </div>
+      <div class="tool-grid">
+        <article class="tool-card">
+          <div class="tool-icon" aria-hidden="true">干</div>
+          <h3>干支・年齢確認</h3>
+          <p>西暦（和暦）を選択し、干支と年齢の目安を確認する。</p>
+          <a class="tool-link" href="./ad-conv.html"><span>ツールを開く</span><span aria-hidden="true">→</span></a>
+        </article>
+        <!--
+        新しいツールのカード例：
+        <article class="tool-card">
+          <div class="tool-icon" aria-hidden="true">計</div>
+          <h3>ツール名</h3>
+          <p>このツールでできることを簡潔に説明します。</p>
+          <a class="tool-link" href="./tool-name.html"><span>ツールを開く</span><span aria-hidden="true">→</span></a>
+        </article>
+        -->
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-inner"><p>Web Tools</p><p>シンプルなWebツール集</p></div></footer>
+</body>
+</html>
