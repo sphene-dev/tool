@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>干支・年齢確認</title>
+<style>
+  :root { color-scheme: light; }
+  body { font-family: "Yu Gothic UI", "Meiryo", sans-serif; background:#f4f6f8; color:#20252b; margin:0; padding:32px 16px; }
+  main { max-width:620px; margin:0 auto; background:white; padding:28px; border-radius:14px; box-shadow:0 4px 18px #00000012; }
+  h1 { font-size:1.5rem; margin:0 0 22px; }
+  label { display:block; font-weight:600; margin-bottom:8px; }
+  select, button { width:100%; box-sizing:border-box; font:inherit; padding:12px 14px; border-radius:8px; }
+  select { border:1px solid #aab3bd; background:white; }
+  button { margin-top:14px; border:0; background:#225fbd; color:white; font-weight:700; cursor:pointer; }
+  button:hover { background:#194d9c; }
+  #result { margin-top:22px; padding:18px; border:1px solid #d8e0e8; border-radius:10px; background:#fbfcfe; line-height:1.8; min-height:48px; }
+  .result-title { font-weight:700; font-size:1.1rem; margin-bottom:8px; }
+  .note { color:#515b66; font-size:.92rem; }
+</style>
+<script type="text/javascript" nonce="abf2ba2c7538411982a405fe4b3" src="//local.adguard.org?ts=1792544841928&amp;type=content-script&amp;dmn=chatgpt.com&amp;url=https%3A%2F%2Fchatgpt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_00000000ce90820bb34079ea90a2ff8a%26fn%3Deto_nenrei.html%26cd%3Dattachment%26ts%3D497929%26p%3Dfs%26cid%3D1%26sig%3D3d5143d81d16e0160c09b1484a050f788d3a869e71824fc5a7e1d488513be4b8%26v%3D0&amp;app=chrome.exe&amp;css=2&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=0"></script><script type="text/javascript" nonce="abf2ba2c7538411982a405fe4b3" src="//local.adguard.org?ts=1792544841928&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<body>
+<main>
+  <h1>干支・年齢確認</h1>
+  <label for="year">西暦（和暦）</label>
+  <select id="year"></select>
+  <button id="run" type="button">実行</button>
+  <section id="result" aria-live="polite">西暦（和暦）を選択して「実行」を押してください。</section>
+  <p class="note">年齢は現在の西暦年との差で表示します。誕生日を迎えたかどうかによる満年齢の違いは反映していません。</p>
+</main>
+<script>
+(() => {
+  const currentYear = new Date().getFullYear();
+  const minYear = 1900;
+  const eras = [
+    { name: "令和", start: 2019, firstDay: "2019-05-01", oldName: "平成", oldUntil: "2019年4月30日" },
+    { name: "平成", start: 1989, firstDay: "1989-01-08", oldName: "昭和", oldUntil: "1989年1月7日" },
+    { name: "昭和", start: 1926, firstDay: "1926-12-25", oldName: "大正", oldUntil: "1926年12月24日" },
+    { name: "大正", start: 1912, firstDay: "1912-07-30", oldName: "明治", oldUntil: "1912年7月29日" },
+    { name: "明治", start: 1868, firstDay: "1868-01-25", oldName: "慶応", oldUntil: "1868年9月7日" }
+  ];
+  const zodiac = ["子（ねずみ）", "丑（うし）", "寅（とら）", "卯（うさぎ）", "辰（たつ）", "巳（へび）",
+                  "午（うま）", "未（ひつじ）", "申（さる）", "酉（とり）", "戌（いぬ）", "亥（いのしし）"];
+  const select = document.getElementById("year");
+  const result = document.getElementById("result");
+
+  function eraFor(year) {
+    return eras.find(era => year >= era.start);
+  }
+//   for (let year = Math.min(currentYear, 2026); year >= minYear; year--) {
+    for (let year = currentYear; year >= minYear; year--) {
+    const era = eraFor(year);
+    const option = document.createElement("option");
+    option.value = String(year);
+    option.textContent = `${year}年（${era.name}${year - era.start + 1}年）`;
+    select.appendChild(option);
+  }
+
+  function run() {
+    const year = Number(select.value);
+    const era = eraFor(year);
+    const age = currentYear - year;
+    const lines = [
+      `<div class="result-title">${year}年（${era.name}${year - era.start + 1}年）</div>`,
+      `<div>干支：${zodiac[((year - 4) % 12 + 12) % 12]}</div>`,
+      `<div>年齢：${age}歳（${currentYear}年時点の年齢目安）</div>`
+    ];
+    const transition = eras.find(item => item.start >= year && item.start <= year && item.oldUntil);
+    if (transition) {
+      lines.push(`<div>西暦${year}年は${transition.oldUntil}まで旧年号${transition.oldName}です。</div>`);
+    }
+    result.innerHTML = lines.join("");
+  }
+  document.getElementById("run").addEventListener("click", run);
+  select.value = String(Math.min(currentYear, 2026));
+})();
+</script>
+</body>
+</html>
